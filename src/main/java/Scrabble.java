@@ -13,8 +13,8 @@ public class Scrabble {
 
     public int score() {
         int answer = 0;
-        for (int i = 0; i < this.wordToScore.length(); ++i) {
-            answer += this.letterScores.get(this.wordToScore.charAt(i));
+        for (char c : wordToScore.toCharArray()) {
+            answer += letterScores.get(c);
         }
         return answer;
     }
