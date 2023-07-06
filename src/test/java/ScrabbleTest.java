@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 public class ScrabbleTest {
 
     @Test
@@ -13,7 +14,7 @@ public class ScrabbleTest {
     }
 
     @Test
-    @Disabled
+//    @Disabled
     public void returnsZeroForNull() {
         Scrabble scrabble = new Scrabble(null);
         assertEquals(scrabble.score(), 0);
