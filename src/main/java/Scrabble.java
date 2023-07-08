@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.lang.String;
 
 public class Scrabble {
     private String word;
@@ -91,6 +90,14 @@ public class Scrabble {
         return answer;
     }
 
+    public int tripleLetterScore() {
+        int answer = 0;
+        for (char c : this.tripleLetters) {
+            answer += letterScores.get(c);
+        }
+        return answer * 2;
+    }
+
     public int score() {
         if (!validateNull()) {
             return 0;
@@ -98,9 +105,10 @@ public class Scrabble {
         if (this.doubleWord || this.tripleWord) {
             return doubleWordScore() + tripleWordScore();
         }
-        if (this.doubleLetters != null) {
-            return computeValidScore() + doubleLetterScore();
+        if (this.doubleLetters != null || this.tripleLetters != null) {
+            return computeValidScore() + doubleLetterScore() + tripleLetterScore();
         }
+
         return computeValidScore();
     }
 }
