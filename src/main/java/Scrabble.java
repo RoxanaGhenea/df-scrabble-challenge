@@ -83,12 +83,23 @@ public class Scrabble {
         return 0;
     }
 
+    public int doubleLetterScore() {
+        int answer = 0;
+        for (char c : this.doubleLetters) {
+            answer += letterScores.get(c);
+        }
+        return answer;
+    }
+
     public int score() {
         if (!validateNull()) {
             return 0;
         }
         if (this.doubleWord || this.tripleWord) {
             return doubleWordScore() + tripleWordScore();
+        }
+        if (this.doubleLetters != null) {
+            return computeValidScore() + doubleLetterScore();
         }
         return computeValidScore();
     }
