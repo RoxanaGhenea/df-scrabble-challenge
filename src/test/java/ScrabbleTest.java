@@ -76,13 +76,13 @@ public class ScrabbleTest {
         Scrabble scrabble = new Scrabble("a", new Character[]{'A'}, new Character[]{}, false, false);
         assertEquals(scrabble.score(), 2);
     }
-//
-//    @Test
+
+    @Test
 //    @Disabled
-//    public void returnsScoreForDoubleLetterOnlyOnce() {
-//        Scrabble scrabble = new Scrabble("aa", new Character[]{'A'}, new Character[]{}, false, false);
-//        assertEquals(scrabble.score(), 3);
-//    }
+    public void returnsScoreForDoubleLetterOnlyOnce() {
+        Scrabble scrabble = new Scrabble("aa", new Character[]{'A'}, new Character[]{}, false, false);
+        assertEquals(scrabble.score(), 3);
+    }
 //
 //    @Test
 //    @Disabled
