@@ -56,22 +56,11 @@ public class Scrabble {
             this.word = this.word.toUpperCase();
         }
     }
-    public int score() {
-        if (!validateNull()) {
-            return 0;
-        }
-        if (this.doubleWord) {
-            return doubleWordScore();
-        }
-        return computeValidScore();
+
+    public boolean validateNull() {
+        return this.word != null;
     }
 
-    public int doubleWordScore() {
-        if (this.doubleWord) {
-            return computeValidScore() * 2;
-        }
-        return 0;
-    }
     public int computeValidScore() {
         int answer = 0;
         for (char c : this.word.toCharArray()) {
@@ -80,8 +69,28 @@ public class Scrabble {
         return answer;
     }
 
-    public boolean validateNull() {
-        return this.word != null;
+    public int doubleWordScore() {
+        if (this.doubleWord) {
+            return computeValidScore() * 2;
+        }
+        return 0;
+    }
+
+    public int tripleWordScore() {
+        if (this.tripleWord) {
+            return  computeValidScore() * 3;
+        }
+        return 0;
+    }
+
+    public int score() {
+        if (!validateNull()) {
+            return 0;
+        }
+        if (this.doubleWord || this.tripleWord) {
+            return doubleWordScore() + tripleWordScore();
+        }
+        return computeValidScore();
     }
 }
 
