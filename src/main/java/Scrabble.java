@@ -1,7 +1,12 @@
 import java.util.HashMap;
+import java.lang.String;
 
 public class Scrabble {
-    private String wordToScore;
+    private String word;
+    private Character[] doubleLetters;
+    private Character[] tripleLetters;
+    private boolean doubleWord;
+    private boolean tripleWord;
     private HashMap<Character, Integer> letterScores;
     {
         letterScores = new HashMap<>();
@@ -34,29 +39,49 @@ public class Scrabble {
         letterScores.put('Z', 10);
     }
 
-    public Scrabble(String wordToScore) {
-        this.wordToScore = wordToScore;
+    public Scrabble(String word) {
+        this.word = word;
         if (validateNull()) {
-            this.wordToScore = this.wordToScore.toUpperCase();
+            this.word = this.word.toUpperCase();
         }
     }
 
+    public Scrabble(String word, Character[] doubleLetters, Character[] tripleLetters, boolean doubleWord, boolean tripleWord) {
+        this.word = word;
+        this.doubleLetters = doubleLetters;
+        this.tripleLetters = tripleLetters;
+        this.doubleWord = doubleWord;
+        this.tripleWord = tripleWord;
+        if (validateNull()) {
+            this.word = this.word.toUpperCase();
+        }
+    }
     public int score() {
         if (!validateNull()) {
             return 0;
         }
+        if (this.doubleWord) {
+            return doubleWordScore();
+        }
         return computeValidScore();
+    }
+
+    public int doubleWordScore() {
+        if (this.doubleWord) {
+            return computeValidScore() * 2;
+        }
+        return 0;
     }
     public int computeValidScore() {
         int answer = 0;
-        for (char c : wordToScore.toCharArray()) {
+        for (char c : this.word.toCharArray()) {
             answer += letterScores.get(c);
         }
         return answer;
     }
 
     public boolean validateNull() {
-        return this.wordToScore != null;
+        return this.word != null;
     }
 }
 
