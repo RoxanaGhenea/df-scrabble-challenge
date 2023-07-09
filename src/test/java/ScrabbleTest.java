@@ -102,8 +102,22 @@ public class ScrabbleTest {
     @Test
 //    @Disabled
     public void returnsScoreForDoubleAndTripleLetter() {
-        Scrabble scrabble = new Scrabble("aa", new Character[]{'A'}, new Character[]{'A'},false, false);
+        Scrabble scrabble = new Scrabble("aa", new Character[]{'A'}, new Character[]{'A'}, false, false);
         assertEquals(scrabble.score(), 5);
     }
+
+    @Test
+//    @Disabled
+    public void returnsScoreForDoubleAndTripleLetterDoubleAndTripleWord() {
+        Scrabble scrabble = new Scrabble("hello", new Character[]{'H'}, new Character[]{'E'}, true, true);
+        assertEquals(scrabble.score(), 84);
+    }
+
+//    @Test
+////    @Disabled
+//    public void returnsScoreForDoubleAndTripleLetterDoubleAndTripleWord1() {
+//        Scrabble scrabble = new Scrabble("hello", new Character[]{'h'}, new Character[]{'l'}, true, true);
+//        assertEquals(scrabble.score(), 84);
+//    }
 
 }

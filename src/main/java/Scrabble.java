@@ -83,18 +83,18 @@ public class Scrabble {
         return answer;
     }
 
-    public int doubleWordScore() {
+    public int doubleWordScore(int baseScore) {
         if (this.doubleWord) {
-            return computeValidScore() * 2;
+            return baseScore * 2;
         }
-        return 0;
+        return baseScore;
     }
 
-    public int tripleWordScore() {
+    public int tripleWordScore(int baseScore) {
         if (this.tripleWord) {
-            return  computeValidScore() * 3;
+            return  baseScore * 3;
         }
-        return 0;
+        return baseScore;
     }
 
     public int doubleLetterScore() {
@@ -117,14 +117,19 @@ public class Scrabble {
         return answer * 2;
     }
 
+    public int finalScore() {
+        int finalScore = 0;
+        finalScore = (computeValidScore() + doubleLetterScore() + tripleLetterScore());
+        finalScore = doubleWordScore(finalScore);
+        finalScore = tripleWordScore(finalScore);
+        return finalScore;
+    }
+
     public int score() {
         if (!validator()) {
             return 0;
         }
-        if (this.doubleWord || this.tripleWord) {
-            return doubleWordScore() + tripleWordScore() + doubleLetterScore() + tripleLetterScore();
-        }
-        return computeValidScore() + doubleLetterScore() + tripleLetterScore();
+        return finalScore();
     }
 }
 
