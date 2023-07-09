@@ -119,5 +119,4 @@ public class ScrabbleTest {
         Scrabble scrabble = new Scrabble("hello", new Character[]{'h'}, new Character[]{'l'}, true, true);
         assertEquals(scrabble.score(), 84);
     }
-
 }

@@ -58,11 +58,11 @@ public class Scrabble {
         }
     }
 
-    public boolean validateNull() {
+    private boolean validateNull() {
         return this.word != null;
     }
 
-    public boolean validateLetters() {
+    private boolean validateLetters() {
         for (char c : this.word.toCharArray()) {
             if (!letterScores.containsKey(c)) {
                 return false;
@@ -71,7 +71,7 @@ public class Scrabble {
         return true;
     }
 
-    public boolean validator() {
+    private boolean validator() {
         return validateNull() && validateLetters();
     }
 
@@ -83,21 +83,21 @@ public class Scrabble {
         return answer;
     }
 
-    public int doubleWordScore(int baseScore) {
+    private int doubleWordScore(int baseScore) {
         if (this.doubleWord) {
             return baseScore * 2;
         }
         return baseScore;
     }
 
-    public int tripleWordScore(int baseScore) {
+    private int tripleWordScore(int baseScore) {
         if (this.tripleWord) {
             return  baseScore * 3;
         }
         return baseScore;
     }
 
-    public int doubleLetterScore() {
+    private int doubleLetterScore() {
         int answer = 0;
         if (this.doubleLetters != null) {
             for (char c : this.doubleLetters) {
@@ -107,7 +107,7 @@ public class Scrabble {
         return answer;
     }
 
-    public int tripleLetterScore() {
+    private int tripleLetterScore() {
         int answer = 0;
         if (this.tripleLetters != null) {
             for (char c : this.tripleLetters) {
@@ -117,12 +117,10 @@ public class Scrabble {
         return answer * 2;
     }
 
-    public int finalScore() {
-        int finalScore = 0;
-        finalScore = (computeValidScore() + doubleLetterScore() + tripleLetterScore());
-        finalScore = doubleWordScore(finalScore);
-        finalScore = tripleWordScore(finalScore);
-        return finalScore;
+    private int finalScore() {
+        int baseScore = computeValidScore() + doubleLetterScore() + tripleLetterScore();
+        int doubleScore = doubleWordScore(baseScore);
+        return tripleWordScore(doubleScore);
     }
 
     public int score() {
