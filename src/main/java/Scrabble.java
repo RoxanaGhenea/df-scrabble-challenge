@@ -36,6 +36,8 @@ public class Scrabble {
         letterScores.put('X', 8);
         letterScores.put('Y', 4);
         letterScores.put('Z', 10);
+        letterScores.put('\n', 0);
+        letterScores.put('\t', 0);
     }
 
     public Scrabble(String word) {
@@ -84,16 +86,20 @@ public class Scrabble {
 
     public int doubleLetterScore() {
         int answer = 0;
-        for (char c : this.doubleLetters) {
-            answer += letterScores.get(c);
+        if (this.doubleLetters != null) {
+            for (char c : this.doubleLetters) {
+                answer += letterScores.get(Character.toUpperCase(c));
+            }
         }
         return answer;
     }
 
     public int tripleLetterScore() {
         int answer = 0;
-        for (char c : this.tripleLetters) {
-            answer += letterScores.get(c);
+        if (this.tripleLetters != null) {
+            for (char c : this.tripleLetters) {
+                answer += letterScores.get(Character.toUpperCase(c));
+            }
         }
         return answer * 2;
     }
@@ -103,13 +109,9 @@ public class Scrabble {
             return 0;
         }
         if (this.doubleWord || this.tripleWord) {
-            return doubleWordScore() + tripleWordScore();
+            return doubleWordScore() + tripleWordScore() + doubleLetterScore() + tripleLetterScore();
         }
-        if (this.doubleLetters != null || this.tripleLetters != null) {
-            return computeValidScore() + doubleLetterScore() + tripleLetterScore();
-        }
-
-        return computeValidScore();
+        return computeValidScore() + doubleLetterScore() + tripleLetterScore();
     }
 }
 
