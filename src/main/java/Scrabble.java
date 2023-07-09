@@ -62,6 +62,19 @@ public class Scrabble {
         return this.word != null;
     }
 
+    public boolean validateLetters() {
+        for (char c : this.word.toCharArray()) {
+            if (!letterScores.containsKey(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean validator() {
+        return validateNull() && validateLetters();
+    }
+
     public int computeValidScore() {
         int answer = 0;
         for (char c : this.word.toCharArray()) {
@@ -105,7 +118,7 @@ public class Scrabble {
     }
 
     public int score() {
-        if (!validateNull()) {
+        if (!validator()) {
             return 0;
         }
         if (this.doubleWord || this.tripleWord) {
