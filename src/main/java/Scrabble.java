@@ -1,9 +1,13 @@
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class Scrabble {
-    private String word;
-    private Character[] doubleLetters;
-    private Character[] tripleLetters;
+    private List<Character> word = Collections.emptyList();
+    private List<Character> doubleLetters = Collections.emptyList();
+    private List<Character> tripleLetters = Collections.emptyList();
     private boolean doubleWord;
     private boolean tripleWord;
     private HashMap<Character, Integer> letterScores;
@@ -41,46 +45,35 @@ public class Scrabble {
     }
 
     public Scrabble(String word) {
-        this.word = word;
-        if (validateNull()) {
-            this.word = this.word.toUpperCase();
+        if (word != null) {
+            this.word = word.toUpperCase().chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         }
     }
 
     public Scrabble(String word, Character[] doubleLetters, Character[] tripleLetters, boolean doubleWord, boolean tripleWord) {
-        this.word = word;
-        this.doubleLetters = doubleLetters;
-        this.tripleLetters = tripleLetters;
         this.doubleWord = doubleWord;
         this.tripleWord = tripleWord;
-        if (validateNull()) {
-            this.word = this.word.toUpperCase();
+        if (word != null) {
+            this.word = word.toUpperCase().chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         }
-    }
-
-    private boolean validateNull() {
-        return this.word != null;
+        if (doubleLetters != null) {
+            this.doubleLetters = Arrays.asList(doubleLetters);
+        }
+        if (tripleLetters != null) {
+            this.tripleLetters = Arrays.asList(tripleLetters);
+        }
     }
 
     private boolean validateLetters() {
-        for (char c : this.word.toCharArray()) {
-            if (!letterScores.containsKey(c)) {
-                return false;
-            }
-        }
-        return true;
+        return this.word.stream().allMatch(c -> letterScores.containsKey(c));
     }
 
     private boolean validator() {
-        return validateNull() && validateLetters();
+        return validateLetters();
     }
 
-    public int computeValidScore() {
-        int answer = 0;
-        for (char c : this.word.toCharArray()) {
-            answer += letterScores.get(c);
-        }
-        return answer;
+    private int computeValidScore() {
+        return this.word.stream().mapToInt(c -> letterScores.get(c)).sum();
     }
 
     private int doubleWordScore(int baseScore) {
@@ -98,27 +91,21 @@ public class Scrabble {
     }
 
     private int doubleLetterScore() {
-        int answer = 0;
-        if (this.doubleLetters != null) {
-            for (char c : this.doubleLetters) {
-                answer += letterScores.get(Character.toUpperCase(c));
-            }
+        if (this.doubleLetters == null) {
+            return 0;
         }
-        return answer;
+        return this.doubleLetters.stream().mapToInt(c -> letterScores.get(Character.toUpperCase(c))).sum();
     }
 
     private int tripleLetterScore() {
-        int answer = 0;
-        if (this.tripleLetters != null) {
-            for (char c : this.tripleLetters) {
-                answer += letterScores.get(Character.toUpperCase(c));
-            }
+        if (this.tripleLetters == null) {
+            return 0;
         }
-        return answer * 2;
+        return 2 * this.tripleLetters.stream().mapToInt(c -> letterScores.get(Character.toUpperCase(c))).sum();
     }
 
     private int finalScore() {
-        int baseScore = computeValidScore() + doubleLetterScore() + tripleLetterScore();
+        int baseScore = (computeValidScore() + doubleLetterScore() + tripleLetterScore());
         int doubleScore = doubleWordScore(baseScore);
         return tripleWordScore(doubleScore);
     }
@@ -130,4 +117,3 @@ public class Scrabble {
         return finalScore();
     }
 }
-
