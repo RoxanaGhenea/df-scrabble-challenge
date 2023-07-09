@@ -113,11 +113,11 @@ public class ScrabbleTest {
         assertEquals(scrabble.score(), 84);
     }
 
-//    @Test
-////    @Disabled
-//    public void returnsScoreForDoubleAndTripleLetterDoubleAndTripleWord1() {
-//        Scrabble scrabble = new Scrabble("hello", new Character[]{'h'}, new Character[]{'l'}, true, true);
-//        assertEquals(scrabble.score(), 84);
-//    }
+    @Test
+//    @Disabled
+    public void returnsScoreForDoubleAndTripleLetterDoubleAndTripleWord1() {
+        Scrabble scrabble = new Scrabble("hello", new Character[]{'h'}, new Character[]{'l'}, true, true);
+        assertEquals(scrabble.score(), 84);
+    }
 
 }
